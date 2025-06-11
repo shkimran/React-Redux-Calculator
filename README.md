@@ -20,6 +20,7 @@ A fully functional calculator built with React 19, TypeScript, and Redux Toolkit
 ## Testing
 
 Run tests with `npm test`
+For Coverage `npm run test:coverage`
 
 ## Tech Stack
 
