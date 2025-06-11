@@ -62,41 +62,48 @@ const calculatorSlice = createSlice({
     handleButton: (state, action: PayloadAction<string>) => {
       const value = action.payload;
 
-      const isNumberOrDot = !isNaN(Number(value)) || value === '.';
-      const { display, overwrite } = state;
-
-      if (isNumberOrDot) {
-        if (overwrite) {
+      if (!isNaN(Number(value)) || value === '.') {
+        if (state.overwrite) {
           state.display = value === '.' ? '0.' : value;
           state.overwrite = false;
         } else {
           state.display =
-            display === '0' && value !== '.' ? value : display + value;
+            state.display === '0' && value !== '.' ? value : state.display + value;
         }
       } else if (value === 'AC') {
         state.display = '0';
         state.expression = [];
         state.overwrite = false;
       } else if (value === '+/-') {
-        state.display = String(parseFloat(display) * -1);
+        state.display = String(parseFloat(state.display) * -1);
       } else if (value === '%') {
-        state.display = String(parseFloat(display) / 100);
+        state.display = String(parseFloat(state.display) / 100);
         state.overwrite = true;
       } else if (value === '=') {
-        const exp = [...state.expression, display];
+        const exp = [...state.expression, state.display];
         const result = compute(exp);
         state.display = String(result);
         state.expression = [];
         state.overwrite = true;
       } else if (isOperator(value)) {
-        const newExp = overwrite
-          ? [...state.expression.slice(0, -1), value]
-          : [...state.expression, display, value];
-        state.expression = newExp;
+        if (state.overwrite) {
+          if (state.expression.length === 0) {
+            state.expression = [state.display, value];
+          } else {
+            const lastToken = state.expression[state.expression.length - 1];
+            if (isOperator(lastToken)) {
+              state.expression[state.expression.length - 1] = value;
+            } else {
+              state.expression.push(value);
+            }
+          }
+        } else {
+          state.expression.push(state.display, value);
+        }
         state.overwrite = true;
       }
-    },
-  },
+    }
+  }
 });
 
 export const { handleButton } = calculatorSlice.actions;

@@ -22,7 +22,6 @@ const Calculator = () => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       const { key } = e;
-
       if (/^[0-9.]$/.test(key)) {
         dispatch(handleButton(key));
       } else if (keyMap[key]) {
