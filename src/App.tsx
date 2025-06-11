@@ -1,9 +1,10 @@
+import Calculator from "./features/Calculator"
 
 function App() {
  
   return (
     <>
-     <h1>hello</h1>
+       <Calculator />
     </>
   )
 }
