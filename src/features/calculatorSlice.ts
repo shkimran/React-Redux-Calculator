@@ -1,4 +1,5 @@
 import { createSlice,type PayloadAction } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 interface CalculatorState {
   display: string;
@@ -43,7 +44,10 @@ const compute = (exp: string[]): number | string => {
         case '−': result = a - b; break;
         case '×': result = a * b; break;
         case '÷':
-          if (b === 0) return 'Error';
+          if (b === 0) {
+            toast.error("Cannot divide by zero");
+            return 'Error';
+          }
           result = a / b;
           break;
       }

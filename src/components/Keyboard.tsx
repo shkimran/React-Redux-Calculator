@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from './Button';
 
 const buttons = [
@@ -8,7 +9,7 @@ const buttons = [
   ['0', '.', '=']
 ];
 
-const Keyboard = () => {
+const Keyboard = React.memo(() => {
   return (
     <div className="grid grid-cols-4 gap-3">
       {buttons.flat().map((btn, idx) => (
@@ -16,6 +17,6 @@ const Keyboard = () => {
       ))}
     </div>
   );
-};
+});
 
 export default Keyboard;

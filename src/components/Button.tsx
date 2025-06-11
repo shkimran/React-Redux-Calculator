@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { handleButton } from '../features/calculatorSlice';
+import React from 'react';
 
 interface ButtonProps {
   value: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ value }) => {
+const Button: React.FC<ButtonProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
 
   const isOp = ['÷', '×', '−', '+', '='].includes(value);
@@ -26,6 +27,6 @@ const Button: React.FC<ButtonProps> = ({ value }) => {
       {value}
     </button>
   );
-};
+});
 
 export default Button;
